@@ -6,6 +6,8 @@
 
 一个使用Pygame和Numba实现的智能五子棋AI游戏，具有强大的AI对手和精美的图形界面。
 
+![SmartFive Game Preview](docs/images/game_preview.png)
+
 ## 特性
 
 - 🤖 强大的AI对手，基于Negamax算法和α-β剪枝优化
@@ -32,7 +34,17 @@ pip install -r requirements.txt
 ## 运行游戏
 
 ```bash
-python main.py
+# 方法1：使用模块方式运行（推荐）
+python -m src.game.main
+
+# 方法2：使用启动脚本运行
+python start.py
+
+# 方法3：在Windows上使用批处理文件运行
+run_game.bat
+
+# 方法4：进入游戏目录运行
+cd src/game && python main.py
 ```
 
 ## 游戏规则
@@ -52,8 +64,13 @@ smart-five/
 │   │   └── five_ai.py       # AI算法实现
 ├── assets/
 │   └── fonts/               # 字体文件（可选）
+├── docs/                    # 文档
+│   ├── AI_ALGORITHM.md     # AI算法详解
+│   └── DEVELOPMENT.md      # 开发指南
 ├── requirements.txt         # 项目依赖
 ├── README.md               # 项目说明
+├── CONTRIBUTING.md         # 贡献指南
+├── CHANGELOG.md            # 变更日志
 └── LICENSE                 # 开源许可证
 ```
 
@@ -72,9 +89,15 @@ smart-five/
 - 缓存机制避免重复计算
 - 多线程支持防止界面卡顿
 
+详细信息请查看[AI算法详解](docs/AI_ALGORITHM.md)。
+
+## 开发指南
+
+有关开发和贡献的详细信息，请查看[开发指南](docs/DEVELOPMENT.md)。
+
 ## 贡献
 
-欢迎提交Issue和Pull Request来改进项目！
+欢迎提交Issue和Pull Request来改进项目！请查看[贡献指南](CONTRIBUTING.md)了解详情。
 
 ## 许可证
 
@@ -82,4 +105,4 @@ smart-five/
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=SmartFive&type=Date)](https://star-history.com/#SmartFive&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=SmartFive/SmartFive&type=Date)](https://star-history.com/#SmartFive/SmartFive&Date)

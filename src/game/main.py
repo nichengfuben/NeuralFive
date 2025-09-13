@@ -3,7 +3,7 @@ import sys
 import threading
 import time
 import os
-from five_ai import create_ai, clear_board, make_move
+from src.ai.five_ai import create_ai, clear_board, make_move
 
 # 初始化Pygame
 pygame.init()
