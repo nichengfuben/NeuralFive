@@ -1,3 +1,0 @@
-@echo off
-echo Starting SmartFive game...
-python -m src.game.main
