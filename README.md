@@ -18,7 +18,8 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/nichengfuben/NeuralFivecd neuralfive
+git clone https://github.com/nichengfuben/NeuralFive
+cd neuralfive
 
 # 创建虚拟环境
 python -m venv venv
