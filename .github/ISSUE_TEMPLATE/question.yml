@@ -1,0 +1,61 @@
+name: Question
+description: 提出一个问题
+title: "[QUESTION] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您提出问题！请填写以下信息以便我们更好地帮助您。
+  
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: 检查清单
+      options:
+        - label: 我已经搜索了现有的issues和文档
+          required: true
+        - label: 我已经阅读了README和文档
+          required: true
+  
+  - type: textarea
+    id: question
+    attributes:
+      label: 问题描述
+      description: 清晰简洁地描述您的问题
+      placeholder: 描述您的问题...
+    validations:
+      required: true
+  
+  - type: textarea
+    id: context
+    attributes:
+      label: 上下文信息
+      description: 提供相关的上下文信息
+      placeholder: 提供相关的上下文...
+    validations:
+      required: true
+  
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境信息
+      description: 提供您的环境信息（如果相关）
+      placeholder: |
+        - 操作系统: [例如 Windows 11]
+        - Python版本: [例如 3.11.0]
+        - 项目版本: [例如 1.0.0]
+  
+  - type: textarea
+    id: attempts
+    attributes:
+      label: 尝试过的解决方案
+      description: 描述您已经尝试过的解决方案
+      placeholder: 描述尝试过的解决方案...
+  
+  - type: textarea
+    id: additional
+    attributes:
+      label: 其他信息
+      description: 添加任何其他相关信息
+      placeholder: 任何其他信息...

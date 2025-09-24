@@ -1,8 +1,10 @@
-# StrategicMind 核心依赖
-pygame>=2.5.0
-numpy>=1.24.0
-numba>=0.57.0
-
-# 可选依赖
-Pillow>=9.0.0  # 图像处理
-psutil>=5.9.0  # 系统监控
+# 核心依赖
+numpy>=1.21.0
+numba>=0.56.0
+pygame>=2.1.0
+click>=8.0.0
+pydantic>=1.8.0
+loguru>=0.6.0
+tqdm>=4.62.0
+matplotlib>=3.5.0
+scipy>=1.7.0

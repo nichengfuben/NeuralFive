@@ -1,80 +1,102 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "strategicmind"
+name = "neuralfive"
 version = "1.0.0"
-description = "一个基于深度搜索算法的智能策略游戏引擎"
+description = "高性能五子棋AI引擎，支持多种搜索算法和机器学习集成"
 readme = "README.md"
 requires-python = ">=3.8"
-license = {text = "MIT"}
+license = {file = "LICENSE"}
 authors = [
-    {name = "StrategicMind Team", email = "contact@strategicmind.dev"}
+    {name = "NeuralFive Team", email = "contact@neuralfive.com"},
 ]
-keywords = [
-    "ai", "artificial-intelligence", "game", "strategy", "gomoku", 
-    "five-in-a-row", "minimax", "negamax", "alpha-beta", "pygame"
+maintainers = [
+    {name = "NeuralFive Team", email = "contact@neuralfive.com"},
 ]
+keywords = ["gomoku", "ai", "game", "chess", "machine-learning", "alpha-beta", "monte-carlo"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Intended Audience :: End Users/Desktop",
-    "Topic :: Games/Entertainment :: Board Games",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Operating System :: OS Independent",
+    "Topic :: Games/Entertainment :: Board Games",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
-    "pygame>=2.5.0",
-    "numpy>=1.24.0",
-    "numba>=0.57.0",
-    "Pillow>=9.0.0",
-    "psutil>=5.9.0",
+    "numpy>=1.21.0",
+    "numba>=0.56.0",
+    "pygame>=2.1.0",
+    "click>=8.0.0",
+    "pydantic>=1.8.0",
+    "loguru>=0.6.0",
+    "tqdm>=4.62.0",
+    "matplotlib>=3.5.0",
+    "scipy>=1.7.0"
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
-    "pytest-xdist>=3.0.0",
-    "black>=23.0.0",
-    "isort>=5.12.0",
-    "flake8>=6.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-benchmark>=4.0.0",
+    "black>=22.0.0",
+    "isort>=5.10.0",
+    "flake8>=5.0.0",
     "mypy>=1.0.0",
-    "pre-commit>=3.0.0",
-    "memory-profiler>=0.60.0",
-    "line-profiler>=4.0.0",
-    "build>=0.10.0",
-    "twine>=4.0.0",
+    "pylint>=2.15.0",
+    "bandit>=1.7.0",
+    "pre-commit>=2.20.0"
+]
+ml = [
+    "torch>=1.12.0",
+    "torchvision>=0.13.0",
+    "scikit-learn>=1.1.0",
+    "tensorboard>=2.9.0",
+    "mlflow>=1.28.0"
 ]
 docs = [
-    "sphinx>=6.0.0",
-    "sphinx-rtd-theme>=1.2.0",
-    "myst-parser>=1.0.0",
+    "sphinx>=5.0.0",
+    "sphinx-rtd-theme>=1.0.0",
+    "myst-parser>=0.18.0",
+    "sphinx-autodoc-typehints>=1.19.0"
+]
+performance = [
+    "psutil>=5.9.0",
+    "memory-profiler>=0.60.0",
+    "line-profiler>=4.0.0",
+    "py-spy>=0.3.0"
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/strategicmind"
-Documentation = "https://strategicmind.readthedocs.io/"
-Repository = "https://github.com/yourusername/strategicmind.git"
-"Bug Tracker" = "https://github.com/yourusername/strategicmind/issues"
-Changelog = "https://github.com/yourusername/strategicmind/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/your-username/neuralfive"
+Documentation = "https://neuralfive.readthedocs.io/"
+Repository = "https://github.com/your-username/neuralfive.git"
+"Bug Tracker" = "https://github.com/your-username/neuralfive/issues"
+Changelog = "https://github.com/your-username/neuralfive/blob/main/CHANGELOG.md"
 
 [project.scripts]
-strategicmind = "strategicmind.main:main"
+neuralfive = "src.main:main"
+neuralfive-cli = "src.cli:cli"
+neuralfive-benchmark = "src.benchmark:main"
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["."]
+include = ["src*"]
+exclude = ["tests*"]
 
 [tool.setuptools.package-data]
-strategicmind = ["assets/*", "assets/images/*", "assets/sounds/*", "assets/fonts/*"]
+"*" = ["*.txt", "*.rst", "*.md"]
 
 [tool.black]
 line-length = 88
@@ -98,8 +120,37 @@ extend-exclude = '''
 profile = "black"
 multi_line_output = 3
 line_length = 88
-known_first_party = ["strategicmind"]
-known_third_party = ["pygame", "numpy", "numba"]
+known_first_party = ["src"]
+src_paths = ["src", "tests"]
+skip_glob = ["**/migrations/**", "**/venv/**", "**/build/**"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--verbose",
+    "--tb=short",
+    "--cov=src",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+    "--cov-report=xml",
+    "--cov-fail-under=90",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+    "benchmark: marks tests as benchmark tests",
+    "gpu: marks tests that require GPU",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+]
 
 [tool.mypy]
 python_version = "3.8"
@@ -115,34 +166,34 @@ warn_unused_ignores = true
 warn_no_return = true
 warn_unreachable = true
 strict_equality = true
+show_error_codes = true
+pretty = true
+namespace_packages = true
+explicit_package_bases = true
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = ["test_*.py"]
-python_classes = ["Test*"]
-python_functions = ["test_*"]
-addopts = [
-    "--strict-markers",
-    "--strict-config",
-    "--verbose",
-    "--tb=short",
-    "--cov=src/strategicmind",
-    "--cov-report=term-missing",
-    "--cov-report=html",
-    "--cov-report=xml",
+[tool.pylint.messages_control]
+disable = [
+    "C0103",  # invalid-name
+    "C0114",  # missing-module-docstring
+    "C0115",  # missing-class-docstring
+    "C0116",  # missing-function-docstring
+    "R0903",  # too-few-public-methods
+    "R0913",  # too-many-arguments
+    "R0914",  # too-many-locals
+    "W0613",  # unused-argument
 ]
-markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-    "integration: marks tests as integration tests",
-    "unit: marks tests as unit tests",
-]
+
+# 移除重复的bandit配置
 
 [tool.coverage.run]
-source = ["src/strategicmind"]
+source = ["src"]
+branch = true
 omit = [
     "*/tests/*",
     "*/test_*",
-    "*/__init__.py",
+    "*/__main__.py",
+    "*/venv/*",
+    "*/build/*",
 ]
 
 [tool.coverage.report]
@@ -158,3 +209,23 @@ exclude_lines = [
     "class .*\\bProtocol\\):",
     "@(abc\\.)?abstractmethod",
 ]
+precision = 2
+show_missing = true
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    ".eggs",
+    "*.egg-info",
+    ".venv",
+    ".tox",
+]
+
+[tool.bandit]
+exclude_dirs = ["tests", "build", "dist"]
+skips = ["B101", "B601"]  # assert_used, paramiko_calls

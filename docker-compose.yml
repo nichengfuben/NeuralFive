@@ -1,30 +1,52 @@
 version: '3.8'
 
 services:
-  strategicmind:
-    build: .
+  neuralfive:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: neuralfive-app
     ports:
-      - "8080:8080"
+      - "8000:8000"
     environment:
       - PYTHONUNBUFFERED=1
+      - DISPLAY=${DISPLAY}
     volumes:
-      - ./config:/app/config
       - ./logs:/app/logs
+      - ./data:/app/data
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "python", "-c", "import src.strategicmind; print('OK')"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
-  # 可选：添加Redis用于缓存
-  redis:
-    image: redis:7-alpine
+  neuralfive-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: neuralfive-dev
     ports:
-      - "6379:6379"
+      - "8001:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DEVELOPMENT=true
+      - DISPLAY=${DISPLAY}
     volumes:
-      - redis_data:/data
+      - .:/app
+      - ./logs:/app/logs
+      - ./data:/app/data
+    stdin_open: true
+    tty: true
     restart: unless-stopped
 
-volumes:
-  redis_data:
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: neuralfive-jupyter
+    ports:
+      - "8888:8888"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - JUPYTER_ENABLE_LAB=yes
+    volumes:
+      - .:/app
+      - ./notebooks:/app/notebooks
+    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+    restart: unless-stopped

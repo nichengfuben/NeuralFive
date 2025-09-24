@@ -1,4 +1,4 @@
-# 基础镜像
+# 开发环境镜像
 FROM python:3.11-slim
 
 # 设置工作目录
@@ -9,26 +9,30 @@ RUN apt-get update && apt-get install -y \
     gcc \
     g++ \
     make \
+    git \
+    vim \
     && rm -rf /var/lib/apt/lists/*
 
 # 复制依赖文件
-COPY requirements.txt .
+COPY requirements.txt requirements-dev.txt ./
 COPY pyproject.toml .
 
 # 安装Python依赖
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements-dev.txt
 
 # 复制源代码
 COPY src/ ./src/
+COPY tests/ ./tests/
 COPY main.py .
 COPY five_ai.py .
 
 # 设置环境变量
 ENV PYTHONPATH=/app
 ENV PYTHONUNBUFFERED=1
+ENV DEVELOPMENT=true
 
-# 暴露端口
-EXPOSE 8000
+# 安装预提交钩子
+RUN pre-commit install
 
-# 运行命令
-CMD ["python", "-m", "neuralfive", "--gui"]
+# 默认命令
+CMD ["python", "-m", "neuralfive", "--cli"]

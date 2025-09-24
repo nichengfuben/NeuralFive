@@ -1,76 +1,122 @@
-# StrategicMind 文档
+# NeuralFive 项目文档
 
-欢迎使用 StrategicMind 智能策略游戏引擎！
+欢迎来到NeuralFive项目文档！这里包含了所有关于安装、使用、开发和贡献的详细信息。
 
 ## 📚 文档目录
 
-- [快速开始](quickstart.md) - 5分钟快速上手
-- [游戏规则](game-rules.md) - 五子棋规则详解
-- [AI算法](ai-algorithm.md) - 核心算法原理
-- [API参考](api-reference.md) - 完整API文档
-- [自定义主题](customization.md) - 界面自定义指南
-- [性能优化](performance.md) - 性能调优建议
-- [常见问题](faq.md) - 问题解答
+### 用户指南
+- [快速开始](quickstart.md) - 5分钟内运行你的第一个游戏
+- [安装指南](installation.md) - 详细的安装说明
+- [用户手册](user-guide.md) - 完整的功能使用指南
+- [常见问题](faq.md) - 常见问题和解决方案
 
-## 🚀 快速开始
+### 开发文档
+- [架构设计](architecture.md) - 项目架构和技术栈
+- [API参考](api-reference.md) - 完整的API文档
+- [开发指南](development.md) - 开发环境设置和最佳实践
+- [测试指南](testing.md) - 测试策略和工具
+- [性能优化](performance.md) - 性能调优指南
 
-### 安装
+### 贡献文档
+- [贡献指南](../CONTRIBUTING.md) - 如何参与项目开发
+- [代码规范](coding-standards.md) - 编码规范和最佳实践
+- [设计文档](design-docs.md) - 设计决策和讨论
 
-```bash
-pip install strategicmind
-```
+### 部署文档
+- [部署指南](deployment.md) - 生产环境部署
+- [Docker指南](docker.md) - 容器化部署
+- [CI/CD配置](cicd.md) - 持续集成和部署
+
+### 高级主题
+- [机器学习集成](machine-learning.md) - AI模型集成指南
+- [扩展开发](extensions.md) - 如何开发扩展插件
+- [国际化](i18n.md) - 多语言支持实现
+
+## 🔗 快速链接
+
+- [GitHub仓库](https://github.com/your-username/neuralfive)
+- [问题追踪](https://github.com/your-username/neuralfive/issues)
+- [讨论区](https://github.com/your-username/neuralfive/discussions)
+- [发布页面](https://github.com/your-username/neuralfive/releases)
+
+## 📖 示例代码
 
 ### 基本使用
 
 ```python
-from strategicmind import StrategicAI, GameBoard
+from neuralfive import NeuralFiveAI, GameState, GameSettings
 
-# 创建AI和棋盘
-ai = StrategicAI()
-board = GameBoard()
+# 创建AI引擎
+ai = NeuralFiveAI(difficulty="medium")
+
+# 创建游戏
+settings = GameSettings(board_size=15)
+game = GameState(settings)
 
 # 开始游戏
-result = ai.make_move(7, 7, 'black')
-print(result)
+game.start_game()
+
+# 获取AI推荐
+move = ai.get_best_move(game)
+print(f"AI推荐移动: ({move.row}, {move.col})")
 ```
 
-### 运行图形界面
+### 高级配置
 
-```bash
-strategicmind
+```python
+from neuralfive import NeuralFiveAI, GameSettings
+
+# 自定义AI配置
+settings = GameSettings(
+    ai_difficulty="hard",
+    board_size=19,
+    player_color="black",
+    ai_color="white"
+)
+
+# 创建高性能AI
+ai = NeuralFiveAI(
+    difficulty="hard",
+    max_search_depth=100,
+    time_limit=2.0,
+    use_cache=True
+)
 ```
 
-## 🧠 AI特性
+## 🆘 获取帮助
 
-- **深度搜索**: 支持100层深度搜索
-- **智能缓存**: 避免重复计算
-- **自适应难度**: 根据局势调整策略
-- **高性能**: 使用Numba JIT编译优化
+如果您在使用或开发过程中遇到问题：
 
-## 🎮 游戏特性
+1. 📖 首先查看相关文档
+2. 🔍 搜索现有的Issues
+3. 💬 在Discussion中提问
+4. 📧 发送邮件到项目维护者
 
-- **现代化界面**: 基于Pygame的流畅图形界面
-- **多语言支持**: 中文/英文切换
-- **动画效果**: 流畅的棋子动画
-- **音效支持**: 可选的音效反馈
+## 📈 文档状态
 
-## 📊 性能指标
+| 文档类型 | 完成度 | 最后更新 |
+|---------|--------|----------|
+| 用户指南 | ✅ 100% | 2025-01-19 |
+| 开发文档 | ✅ 100% | 2025-01-19 |
+| API参考 | ✅ 100% | 2025-01-19 |
+| 部署文档 | 🔄 80% | 2025-01-19 |
+| 高级主题 | 🔄 60% | 2025-01-19 |
 
-| 指标 | 数值 |
-|------|------|
-| 搜索深度 | 100层 |
-| 响应时间 | <100ms |
-| 内存占用 | <50MB |
-| 准确率 | 99.2% |
+## 📝 贡献文档
 
-## 🤝 贡献
+我们欢迎文档贡献！如果您发现文档有误或想要添加内容：
 
-我们欢迎所有形式的贡献！请查看 [贡献指南](../CONTRIBUTING.md) 了解如何参与。
+1. Fork项目仓库
+2. 修改或添加文档
+3. 提交Pull Request
+4. 描述您的更改
 
-## 📄 许可证
+文档编写规范：
+- 使用清晰的Markdown格式
+- 添加适当的代码示例
+- 保持语言简洁明了
+- 定期更新过时信息
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](../LICENSE) 了解详情。
+---
 
-## 🙏 致谢
-
-感谢所有为 StrategicMind 做出贡献的开发者和用户！
+*文档是开源项目的重要组成部分，感谢您的关注和贡献！*
