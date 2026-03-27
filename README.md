@@ -122,8 +122,7 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ## 作者
 
-- 你的名字 - [@yourtwitter](https://twitter.com/yourtwitter)
-
+- nichengfuben@outlook.com
 ## 致谢
 
 - 五子棋AI算法研究社区
