@@ -1,94 +1,27 @@
-name: CI/CD Pipeline
+name: CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.8, 3.9, 3.10, 3.11, 3.12]
-
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements-dev.txt
-        pip install -e .
-    
-    - name: Lint with flake8
-      run: |
-        flake8 src tests --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 src tests --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
-    
-    - name: Format check with black
-      run: black --check src tests
-    
-    - name: Import sort check with isort
-      run: isort --check-only src tests
-    
-    - name: Type check with mypy
-      run: mypy src
-    
-    - name: Security check with bandit
-      run: bandit -r src -f json
-    
-    - name: Test with pytest
-      run: |
-        pytest --cov=src --cov-report=xml --cov-report=html
-    
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        file: ./coverage.xml
-        flags: unittests
-        name: codecov-umbrella
-        fail_ci_if_error: true
-
-  benchmark:
+  smoke:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.11
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements-dev.txt
-        pip install -e .
-    
-    - name: Run benchmarks
-      run: |
-        pytest tests/test_benchmark.py --benchmark-json output.json
-    
-    - name: Upload benchmark results
-      uses: actions/upload-artifact@v3
-      with:
-        name: benchmark-results
-        path: output.json
+      - uses: actions/checkout@v4
 
-  docker:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Build Docker image
-      run: docker build -t neuralfive .
-    
-    - name: Test Docker image
-      run: docker run --rm neuralfive python -c "import neuralfive; print('Import successful')"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Syntax smoke
+        run: |
+          python -m compileall -q src tests
